@@ -3,7 +3,7 @@
 import serial
 from bokeh.models.ranges import DataRange1d
 from bokeh.plotting import figure, curdoc, ColumnDataSource
-from .rasps_ports import RECIEVER_PORT
+from rasps.rasps_ports import RECIEVER_PORT
 
 
 def read_value_pair(ser):
