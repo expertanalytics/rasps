@@ -13,5 +13,7 @@ def sine_writer(port: str, sleep_time: float=0.01) -> None:
     while True:
         t = time.time()
         f = m.sin(t)
-        ser.write("{} {}\n".format(t, f).encode("utf-8"))
+        msg = "{} {}\n".format(t, f)
+        print(msg)
+        ser.write(msg.encode("utf-8"))
         time.sleep(sleep_time)
