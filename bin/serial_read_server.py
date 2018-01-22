@@ -53,14 +53,11 @@ def main():
     io_loop = IOLoop.current()
     bapp = Application(FunctionHandler(make_document))
     http_server_kwargs = {"extra_websocket_origins": ["*"]}
-    #server = Server({"/": bapp}, io_loop=io_loop, http_server_kwargs=http_server_kwargs, port=8000)
-    server = Server({"/": bapp}, io_loop=io_loop, port=8000, allow_websocket_origin=["*"])
+    server = Server({"/read_eeg": bapp}, io_loop=io_loop, port=8000, allow_websocket_origin=["*"])
     server.start()
-    io_loop.add_callback(server.show, "/")
+    #io_loop.add_callback(server.show, "/")
     io_loop.start()
 
 
 if __name__ == "__main__":
     main()
-#else:
-#    make_document(curdoc())
