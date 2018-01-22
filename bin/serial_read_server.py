@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 
-import serial
+from tornado.ioloop import IOLoop
+from bokeh.application.handlers import FunctionHandler
+from bokeh.application import Application
+from bokeh.server.server import Server
+
 from bokeh.models.ranges import DataRange1d
 from bokeh.plotting import figure, curdoc, ColumnDataSource
 from rasps.rasps_ports import RECIEVER_PORT
+import serial
 
 
 def read_value_pair(ser):
@@ -39,4 +44,17 @@ def make_document(doc):
 
     doc.add_periodic_callback(update, 1)
 
-make_document(curdoc())
+
+def main():
+    io_loop = IOLoop.current()
+    bapp = Application(FunctionHandler(make_document))
+    server = Server({"/": bapp}, io_loop=io_loop, extra_websocket_origins=["*"], port=8000)
+    server.start()
+    io_loop.add_callback(server.show, "/")
+    io_loop.start()
+
+
+if __name__ == "__main__":
+    main()
+#else:
+#    make_document(curdoc())
