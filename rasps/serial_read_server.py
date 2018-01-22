@@ -55,7 +55,6 @@ def main():
     http_server_kwargs = {"extra_websocket_origins": ["*"]}
     server = Server({"/read_eeg": bapp}, io_loop=io_loop, port=8000, allow_websocket_origin=["*"])
     server.start()
-    #io_loop.add_callback(server.show, "/")
     io_loop.start()
 
 
