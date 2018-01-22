@@ -13,6 +13,10 @@ import serial
 
 def read_value_pair(ser):
     msg = ser.readline().decode("utf-8")
+    parts = msg.split()
+    while len(parts) != 2:
+        msg = ser.readline().decode("utf-8")
+        parts = msg.split()
     t, f = [float(_) for _ in msg.split()]
     return 1000*t, f
 
