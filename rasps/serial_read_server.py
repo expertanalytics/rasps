@@ -52,7 +52,6 @@ def make_document(doc):
 def main():
     io_loop = IOLoop.current()
     bapp = Application(FunctionHandler(make_document))
-    http_server_kwargs = {"extra_websocket_origins": ["*"]}
     server = Server({"/read_eeg": bapp}, io_loop=io_loop, port=8000, allow_websocket_origin=["*"])
     server.start()
     io_loop.start()
