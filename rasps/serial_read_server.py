@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import logging
 from tornado.ioloop import IOLoop
 from bokeh.application.handlers import FunctionHandler
 from bokeh.application import Application
@@ -18,6 +19,7 @@ def read_value_pair(ser):
         msg = ser.readline().decode("utf-8")
         parts = msg.split()
     t, f = [float(_) for _ in msg.split()]
+    logging.info(f"{t}: {f}")
     return 1000*t, f
 
 
@@ -50,9 +52,11 @@ def make_document(doc):
 
 
 def main():
+    logger = logging.getLogger()
+    logger.setLevel(logging.ERROR)
     io_loop = IOLoop.current()
     bapp = Application(FunctionHandler(make_document))
-    server = Server({"/read_eeg": bapp}, io_loop=io_loop, port=8000, allow_websocket_origin=["*"])
+    server = Server({"/read_eeg": bapp}, io_loop=io_loop, port=5010, allow_websocket_origin=["*"])
     server.start()
     io_loop.start()
 
